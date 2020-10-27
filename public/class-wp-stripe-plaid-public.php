@@ -3,7 +3,7 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       htps://www.justinwhall.com
+ * @link       https://www.justinwhall.com
  * @since      1.0.1
  *
  * @package    Wp_Stripe_Plaid
@@ -179,11 +179,6 @@ class Wp_Stripe_Plaid_Public {
 			$this->user_message[] = 'Missing Plaid Secret';
 		}
 
-		if ( !strlen( trim( $this->settings['plaid_public_key'] ) ) ) {
-			$this->user_message[] = 'Missing Plaid public key';
-		}
-
-
 	}
 
 	/**
@@ -225,6 +220,7 @@ class Wp_Stripe_Plaid_Public {
 
 				// Do we have a param with the amount?
 				$amount = ( isset( $_GET['amount']  ) ) ? (float) $_GET['amount'] : '';
+				// @todo add params for Note and Email address
 
 				if ( is_user_logged_in() ) {
 					$user = wp_get_current_user();
@@ -251,7 +247,7 @@ class Wp_Stripe_Plaid_Public {
 					</div>
 
 					<div>
-						<button data-publickey="<?php echo esc_attr( $this->settings['plaid_public_key'] ); ?>" id='linkButton'>Select Bank Account</button>
+						<button data-linktoken="<?php echo esc_attr( $this->get_link_token() ); ?>" id='linkButton'>Select Bank Account</button>
 						<button  id='sp-pay'>Pay</button>
 						<div class="sp-spinner">
 						  <div class="double-bounce1"></div>
@@ -275,6 +271,44 @@ class Wp_Stripe_Plaid_Public {
 		}
 
 	}
+
+	public function get_link_token() {
+        $env_setting = $this->settings['sp_environment'];
+        $env = ( $this->settings['sp_environment'] === 'live' ) ? 'production' : 'sandbox';
+        if ( $env_setting === 'live' ) {
+            $env = 'production';
+        } elseif ( $env_setting === 'development' ) {
+            $env = 'development';
+        } else {
+            $env = 'sandbox';
+        }
+
+        $headers[] = 'Content-Type: application/json';
+	    $params = [
+            "client_id" => $this->settings['plaid_client_id'],
+            "secret" => $this->settings['plaid_secret'],
+            "client_name" => get_bloginfo('name') . ' WP',
+            "user" => [ "client_user_id" => get_site_url() ],
+            "products" => ["transactions"],
+            "country_codes" => ["US"],
+            "language" => "en",
+        ];
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://" . $env . ".plaid.com/link/token/create");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 80);
+
+        if( !$result = curl_exec( $ch ) ) {
+            trigger_error( curl_error( $ch ) );
+        }
+        curl_close( $ch );
+
+        return json_decode($result)->link_token;
+    }
 
 	/**
 	 * Gets a customer from the $this->stripe_customers by email or returns false.
@@ -478,7 +512,6 @@ class Wp_Stripe_Plaid_Public {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 80);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 		if(!$result = curl_exec($ch)) {
 			trigger_error(curl_error($ch));
@@ -503,7 +536,6 @@ class Wp_Stripe_Plaid_Public {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 80);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 		if(!$result = curl_exec($ch)) {
 			trigger_error(curl_error($ch));

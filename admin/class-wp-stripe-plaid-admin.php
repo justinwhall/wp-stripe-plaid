@@ -167,15 +167,6 @@ class Wp_Stripe_Plaid_Admin {
 					'sanitize_callback' => 'sanitize_text_field',
 				),
 				array(
-					'name'              => 'plaid_public_key',
-					'label'             => __( 'Plaid Public Key', 'wp-stripe-plaid' ),
-					'desc'              => __( '', 'wp-stripe-plaid' ),
-					'placeholder'       => __( '', 'wp-stripe-plaid' ),
-					'type'              => 'text',
-					'default'           => '',
-					'sanitize_callback' => 'sanitize_text_field',
-				),
-				array(
 					'name'              => 'plaid_secret',
 					'label'             => __( 'Plaid Secret', 'wp-stripe-plaid' ),
 					'desc'              => __( '', 'wp-stripe-plaid' ),

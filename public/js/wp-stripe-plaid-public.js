@@ -8,7 +8,7 @@
     env: $( '#sc-form' ).data( 'env' ),
     apiVersion: 'v2',
     clientName: $('#sc-form').data('title'),
-    key: $( '#linkButton' ).data( 'publickey' ),
+    token: $( '#linkButton' ).data( 'linktoken' ),
     product: 'auth',
     selectAccount: true,
     onSuccess: function ( public_token, metadata ) {
@@ -71,7 +71,8 @@
           $( '.sp-spinner' ).css( 'opacity', 0 );
           if ( data.error ) {
             // console.log(data);
-            addError( 'There was an error processing your payment.' );
+            errors.push( 'There was an error processing your payment.' );
+            showErrors(errors);
           } else {
             $( '#sc-form' ).fadeTo( 'fast', 0 );
             $( '#sp-response' ).show();
