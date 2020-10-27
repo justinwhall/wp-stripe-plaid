@@ -5,7 +5,7 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       htps://www.justinwhall.com
+ * @link       https://www.justinwhall.com
  * @since      1.0.0
  *
  * @package    Wp_Stripe_Plaid
