@@ -193,6 +193,8 @@ class Wp_Stripe_Plaid_Public {
 	 */
 	public function render_form() {
 
+		require WP_STRIPE_PLAID_PATH . 'vendor/stripe/stripe-php/init.php';
+
 		if ( defined( 'REST_REQUEST' ) || is_admin() ) {
 			return;
 		}
@@ -229,7 +231,7 @@ class Wp_Stripe_Plaid_Public {
 				}
 				ob_start();
 			?>
-				<form action="javascript:void(0);" id="sc-form" data-env="<?php echo $env;  ?>" novalidate>
+				<form action="javascript:void(0);" id="sc-form" data-env="<?php echo $env;  ?>" data-title="<?php echo bloginfo('name')?>" novalidate>
 
 					<?php if ( is_user_logged_in() ) : ?>
 						<input id="lb-ach-email" type="hidden" value="<?php echo $user->data->user_email; ?>" >
@@ -301,6 +303,8 @@ class Wp_Stripe_Plaid_Public {
 	 * @return void
 	 */
 	public function call_stripe( $amount, $currency, $token, $description, $email ) {
+		require WP_STRIPE_PLAID_PATH . 'vendor/stripe/stripe-php/init.php';
+
 
 		\Stripe\Stripe::setApiKey( $this->stripe_key );
 

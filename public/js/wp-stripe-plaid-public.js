@@ -7,7 +7,7 @@
   var linkHandler = Plaid.create( {
     env: $( '#sc-form' ).data( 'env' ),
     apiVersion: 'v2',
-    clientName: 'Stripe / Plaid Test',
+    clientName: $('#sc-form').data('title'),
     key: $( '#linkButton' ).data( 'publickey' ),
     product: 'auth',
     selectAccount: true,
@@ -28,7 +28,6 @@
   $( '#sp-pay' ).on( 'click', callPlaid );
 
   function callPlaid() {
-    console.log('fired');
 
     var errors = [];
 
