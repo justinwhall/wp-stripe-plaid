@@ -7,8 +7,8 @@
   var linkHandler = Plaid.create( {
     env: $( '#sc-form' ).data( 'env' ),
     apiVersion: 'v2',
-    clientName: 'Stripe / Plaid Test',
-    key: $( '#linkButton' ).data( 'publickey' ),
+    clientName: $('#sc-form').data('title'),
+    token: $( '#linkButton' ).data( 'linktoken' ),
     product: 'auth',
     selectAccount: true,
     onSuccess: function ( public_token, metadata ) {
@@ -28,7 +28,6 @@
   $( '#sp-pay' ).on( 'click', callPlaid );
 
   function callPlaid() {
-    console.log('fired');
 
     var errors = [];
 
@@ -72,7 +71,8 @@
           $( '.sp-spinner' ).css( 'opacity', 0 );
           if ( data.error ) {
             // console.log(data);
-            addError( 'There was an error processing your payment.' );
+            errors.push( 'There was an error processing your payment.' );
+            showErrors(errors);
           } else {
             $( '#sc-form' ).fadeTo( 'fast', 0 );
             $( '#sp-response' ).show();

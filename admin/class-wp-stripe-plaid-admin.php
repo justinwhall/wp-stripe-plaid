@@ -3,7 +3,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       htps://www.justinwhall.com
+ * @link       https://www.justinwhall.com
  * @since      1.0.1
  *
  * @package    Wp_Stripe_Plaid
@@ -160,15 +160,6 @@ class Wp_Stripe_Plaid_Admin {
 				array(
 					'name'              => 'plaid_client_id',
 					'label'             => __( 'Plaid Client ID', 'wp-stripe-plaid' ),
-					'desc'              => __( '', 'wp-stripe-plaid' ),
-					'placeholder'       => __( '', 'wp-stripe-plaid' ),
-					'type'              => 'text',
-					'default'           => '',
-					'sanitize_callback' => 'sanitize_text_field',
-				),
-				array(
-					'name'              => 'plaid_public_key',
-					'label'             => __( 'Plaid Public Key', 'wp-stripe-plaid' ),
 					'desc'              => __( '', 'wp-stripe-plaid' ),
 					'placeholder'       => __( '', 'wp-stripe-plaid' ),
 					'type'              => 'text',

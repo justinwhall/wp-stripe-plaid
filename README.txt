@@ -1,10 +1,10 @@
 === LittleBot ACH for Stripe + Plaid ===
-Contributors: jwind
+Contributors: jwind, noahott
 Donate link: https://www.littlebot.io/make-a-donation/
 Tags: Stripe, plaid, ACH, e-commerce, ecommerce, commerce, bank, bank account
 Requires at least: 3.0.1
-Tested up to: 5.0.3
-Stable tag: 1.2.7
+Tested up to: 5.5.1
+Stable tag: 1.2.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,15 +24,23 @@ WordPress plugin that allows easy ACH bank transfer payments via Stripe + Plaid
 == Screenshots ==
 
 == Changelog ==
+= 1.2.9 =
+* Plaid authentication without public key
+
+= 1.2.8 =
+* updates from WordPress.org
 
 = 1.2.7 =
-Security Update
+* Conditionally include stripe SDK
+
+= 1.2.7 =
+* Security Update
 
 = 1.2.6 =
-Fix: typo in Plaid setting
+* Fix: typo in Plaid setting
 
 = 1.2.5 =
-Fix: compatibility with Gutenberg
+* Fix: compatibility with Gutenberg
 
 = 1.2.3 =
 * NEW: Allow un authenticated users to pay

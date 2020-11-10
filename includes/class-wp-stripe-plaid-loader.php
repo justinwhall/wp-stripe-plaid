@@ -3,7 +3,7 @@
 /**
  * Register all actions and filters for the plugin
  *
- * @link       htps://www.justinwhall.com
+ * @link       https://www.justinwhall.com
  * @since      1.0.0
  *
  * @package    Wp_Stripe_Plaid
