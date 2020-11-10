@@ -91,7 +91,7 @@ register_deactivation_hook( __FILE__, 'deactivate_wp_stripe_plaid' );
  */
 require WP_STRIPE_PLAID_PATH . 'includes/class-wp-stripe-plaid.php';
 require WP_STRIPE_PLAID_PATH . 'admin/class-wp-stripe-plaid-settings-api.php';
-
+require WP_STRIPE_PLAID_PATH . 'vendor/autoload.php';
 
 
 /**
